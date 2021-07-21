@@ -1,0 +1,44 @@
+mutation UpdateProduct(
+    $productId: Int!
+    $name: String!
+    $productNumber: String!
+    $makeFlag: Boolean!
+    $finishedGoodsFlag: Boolean!
+    $safetyStockLevel: Short!
+    $reorderPoint: Short!
+    $standardCost: Decimal!
+    $listPrice: Decimal!
+    $daysToManufacture: Int!
+    $sellStartDate: DateTime!)
+  {
+    updateProduct(input: {
+      productId: $productId
+      name: $name
+      productNumber: $productNumber
+      makeFlag: $makeFlag
+      finishedGoodsFlag: $finishedGoodsFlag
+      safetyStockLevel: $safetyStockLevel
+      reorderPoint: $reorderPoint
+      standardCost: $standardCost
+      listPrice: $listPrice
+      daysToManufacture: $daysToManufacture
+      sellStartDate: $sellStartDate
+    })
+    {
+      product
+      {
+        name
+        productId
+        name
+        productNumber
+        makeFlag
+        finishedGoodsFlag
+        safetyStockLevel
+        reorderPoint
+        standardCost
+        listPrice
+        daysToManufacture
+        sellStartDate
+      }
+    }
+  }

@@ -1,0 +1,11 @@
+{
+  "schema": "schema.graphql",
+  "documents": "**/*.graphql",
+  "extensions": {
+    "strawberryShake": {
+      "name": "AdvertureWorksClient",
+      "url": "http://localhost:5000/graphql",
+      "dependencyInjection": true
+    }
+  }
+}

@@ -1,0 +1,444 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Subscription {
+  onProductAdded: ProductDto!
+  onProductUpdatedAsync: ProductUpdatedPayload!
+}
+
+enum ApplyPolicy {
+  BEFORE_RESOLVER
+  AFTER_RESOLVER
+}
+
+type Query {
+  products(where: ProductDtoFilterInput order: [ProductDtoSortInput!]): [ProductDto!]!
+  product(where: ProductDtoFilterInput order: [ProductDtoSortInput!]): ProductDto
+  workOrders: [WorkOrderDto!]!
+  token: String!
+}
+
+type Mutation {
+  addProduct(input: AddProductInput!): AddProductPayload!
+  updateProduct(input: UpdateProductInput!): UpdateProductPayload!
+}
+
+input ProductDtoFilterInput {
+  and: [ProductDtoFilterInput!]
+  or: [ProductDtoFilterInput!]
+  name: StringOperationFilterInput
+  productNumber: StringOperationFilterInput
+  makeFlag: BooleanOperationFilterInput
+  finishedGoodsFlag: BooleanOperationFilterInput
+  color: StringOperationFilterInput
+  safetyStockLevel: ComparableInt16OperationFilterInput
+  reorderPoint: ComparableInt16OperationFilterInput
+  standardCost: ComparableDecimalOperationFilterInput
+  listPrice: ComparableDecimalOperationFilterInput
+  size: StringOperationFilterInput
+  sizeUnitMeasureCode: StringOperationFilterInput
+  weightUnitMeasureCode: StringOperationFilterInput
+  weight: ComparableNullableOfDecimalOperationFilterInput
+  daysToManufacture: ComparableInt32OperationFilterInput
+  productLine: StringOperationFilterInput
+  class: StringOperationFilterInput
+  style: StringOperationFilterInput
+  productSubcategoryId: ComparableNullableOfInt32OperationFilterInput
+  productModelId: ComparableNullableOfInt32OperationFilterInput
+  sellStartDate: ComparableDateTimeOperationFilterInput
+  sellEndDate: ComparableNullableOfDateTimeOperationFilterInput
+  discontinuedDate: ComparableNullableOfDateTimeOperationFilterInput
+  modifiedDate: ComparableDateTimeOperationFilterInput
+}
+
+input ProductDtoSortInput {
+  productId: SortEnumType
+  name: SortEnumType
+  productNumber: SortEnumType
+  makeFlag: SortEnumType
+  finishedGoodsFlag: SortEnumType
+  color: SortEnumType
+  safetyStockLevel: SortEnumType
+  reorderPoint: SortEnumType
+  standardCost: SortEnumType
+  listPrice: SortEnumType
+  size: SortEnumType
+  sizeUnitMeasureCode: SortEnumType
+  weightUnitMeasureCode: SortEnumType
+  weight: SortEnumType
+  daysToManufacture: SortEnumType
+  productLine: SortEnumType
+  class: SortEnumType
+  style: SortEnumType
+  productSubcategoryId: SortEnumType
+  productModelId: SortEnumType
+  sellStartDate: SortEnumType
+  sellEndDate: SortEnumType
+  discontinuedDate: SortEnumType
+  rowguid: SortEnumType
+  modifiedDate: SortEnumType
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input BooleanOperationFilterInput {
+  eq: Boolean
+  neq: Boolean
+}
+
+input ComparableInt16OperationFilterInput {
+  eq: Short
+  neq: Short
+  in: [Short!]
+  nin: [Short!]
+  gt: Short
+  ngt: Short
+  gte: Short
+  ngte: Short
+  lt: Short
+  nlt: Short
+  lte: Short
+  nlte: Short
+}
+
+input ComparableDecimalOperationFilterInput {
+  eq: Decimal
+  neq: Decimal
+  in: [Decimal!]
+  nin: [Decimal!]
+  gt: Decimal
+  ngt: Decimal
+  gte: Decimal
+  ngte: Decimal
+  lt: Decimal
+  nlt: Decimal
+  lte: Decimal
+  nlte: Decimal
+}
+
+input ComparableNullableOfDecimalOperationFilterInput {
+  eq: Decimal
+  neq: Decimal
+  in: [Decimal]
+  nin: [Decimal]
+  gt: Decimal
+  ngt: Decimal
+  gte: Decimal
+  ngte: Decimal
+  lt: Decimal
+  nlt: Decimal
+  lte: Decimal
+  nlte: Decimal
+}
+
+input ComparableInt32OperationFilterInput {
+  eq: Int
+  neq: Int
+  in: [Int!]
+  nin: [Int!]
+  gt: Int
+  ngt: Int
+  gte: Int
+  ngte: Int
+  lt: Int
+  nlt: Int
+  lte: Int
+  nlte: Int
+}
+
+input ComparableNullableOfInt32OperationFilterInput {
+  eq: Int
+  neq: Int
+  in: [Int]
+  nin: [Int]
+  gt: Int
+  ngt: Int
+  gte: Int
+  ngte: Int
+  lt: Int
+  nlt: Int
+  lte: Int
+  nlte: Int
+}
+
+input ComparableDateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime!]
+  nin: [DateTime!]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+
+input ComparableNullableOfDateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime]
+  nin: [DateTime]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+
+enum SortEnumType {
+  ASC
+  DESC
+}
+
+type AddProductPayload {
+  product: ProductDto
+  errors: [UserError!]
+}
+
+type WorkOrderDto {
+  workOrderId: Int!
+  productId: Int!
+  orderQty: Int!
+  stockedQty: Int!
+  scrappedQty: Short!
+  startDate: DateTime!
+  endDate: DateTime
+  dueDate: DateTime!
+}
+
+type ProductDto {
+  productId: Int!
+  name: String!
+  productNumber: String!
+  makeFlag: Boolean!
+  finishedGoodsFlag: Boolean!
+  color: String
+  safetyStockLevel: Short!
+  reorderPoint: Short!
+  standardCost: Decimal!
+  listPrice: Decimal!
+  size: String
+  sizeUnitMeasureCode: String
+  weightUnitMeasureCode: String
+  weight: Decimal
+  daysToManufacture: Int!
+  productLine: String
+  class: String
+  style: String
+  productSubcategoryId: Int
+  productModelId: Int
+  sellStartDate: DateTime!
+  sellEndDate: DateTime
+  discontinuedDate: DateTime
+  rowguid: Uuid!
+  modifiedDate: DateTime!
+  productInventories(where: ProductInventoryDtoFilterInput order: [ProductInventoryDtoSortInput!]): [ProductInventoryDto!]!
+  workOrders(where: WorkOrderDtoFilterInput order: [WorkOrderDtoSortInput!]): [WorkOrderDto!]!
+}
+
+type UpdateProductPayload {
+  product: ProductDto
+  errors: [UserError!]
+}
+
+input AddProductInput {
+  name: String!
+  productNumber: String!
+  makeFlag: Boolean!
+  finishedGoodsFlag: Boolean!
+  safetyStockLevel: Short!
+  reorderPoint: Short!
+  standardCost: Decimal!
+  listPrice: Decimal!
+  daysToManufacture: Int!
+  sellStartDate: DateTime!
+}
+
+input UpdateProductInput {
+  productId: Int!
+  name: String!
+  productNumber: String!
+  makeFlag: Boolean!
+  finishedGoodsFlag: Boolean!
+  safetyStockLevel: Short!
+  reorderPoint: Short!
+  standardCost: Decimal!
+  listPrice: Decimal!
+  daysToManufacture: Int!
+  sellStartDate: DateTime!
+}
+
+type ProductUpdatedPayload {
+  product: ProductDto!
+  productId: ID!
+}
+
+"The `Short` scalar type represents non-fractional signed whole 16-bit numeric values. Short can represent values between -(2^15) and 2^15 - 1."
+scalar Short
+
+"The built-in `Decimal` scalar type."
+scalar Decimal
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime
+
+input ProductInventoryDtoFilterInput {
+  and: [ProductInventoryDtoFilterInput!]
+  or: [ProductInventoryDtoFilterInput!]
+  productId: ComparableInt32OperationFilterInput
+  locationId: ComparableInt16OperationFilterInput
+  shelf: StringOperationFilterInput
+  bin: ComparableByteOperationFilterInput
+  quantity: ComparableInt16OperationFilterInput
+  rowguid: ComparableGuidOperationFilterInput
+  modifiedDate: ComparableDateTimeOperationFilterInput
+  product: ProductDtoFilterInput
+  location: LocationDtoFilterInput
+}
+
+input ProductInventoryDtoSortInput {
+  productId: SortEnumType
+  locationId: SortEnumType
+  shelf: SortEnumType
+  bin: SortEnumType
+  quantity: SortEnumType
+  rowguid: SortEnumType
+  modifiedDate: SortEnumType
+  product: ProductDtoSortInput
+  location: LocationDtoSortInput
+}
+
+input WorkOrderDtoFilterInput {
+  and: [WorkOrderDtoFilterInput!]
+  or: [WorkOrderDtoFilterInput!]
+  workOrderId: ComparableInt32OperationFilterInput
+  productId: ComparableInt32OperationFilterInput
+  orderQty: ComparableInt32OperationFilterInput
+  stockedQty: ComparableInt32OperationFilterInput
+  scrappedQty: ComparableInt16OperationFilterInput
+  startDate: ComparableDateTimeOperationFilterInput
+  endDate: ComparableNullableOfDateTimeOperationFilterInput
+  dueDate: ComparableDateTimeOperationFilterInput
+}
+
+input WorkOrderDtoSortInput {
+  workOrderId: SortEnumType
+  productId: SortEnumType
+  orderQty: SortEnumType
+  stockedQty: SortEnumType
+  scrappedQty: SortEnumType
+  startDate: SortEnumType
+  endDate: SortEnumType
+  dueDate: SortEnumType
+}
+
+input ComparableByteOperationFilterInput {
+  eq: Byte
+  neq: Byte
+  in: [Byte!]
+  nin: [Byte!]
+  gt: Byte
+  ngt: Byte
+  gte: Byte
+  ngte: Byte
+  lt: Byte
+  nlt: Byte
+  lte: Byte
+  nlte: Byte
+}
+
+input ComparableGuidOperationFilterInput {
+  eq: Uuid
+  neq: Uuid
+  in: [Uuid!]
+  nin: [Uuid!]
+  gt: Uuid
+  ngt: Uuid
+  gte: Uuid
+  ngte: Uuid
+  lt: Uuid
+  nlt: Uuid
+  lte: Uuid
+  nlte: Uuid
+}
+
+input LocationDtoFilterInput {
+  and: [LocationDtoFilterInput!]
+  or: [LocationDtoFilterInput!]
+  locationId: ComparableInt16OperationFilterInput
+  name: StringOperationFilterInput
+  costRate: ComparableDecimalOperationFilterInput
+  availability: ComparableDecimalOperationFilterInput
+  modifiedDate: ComparableDateTimeOperationFilterInput
+  productInventories: ListFilterInputTypeOfProductInventoryDtoFilterInput
+}
+
+input LocationDtoSortInput {
+  locationId: SortEnumType
+  name: SortEnumType
+  costRate: SortEnumType
+  availability: SortEnumType
+  modifiedDate: SortEnumType
+}
+
+input ListFilterInputTypeOfProductInventoryDtoFilterInput {
+  all: ProductInventoryDtoFilterInput
+  none: ProductInventoryDtoFilterInput
+  some: ProductInventoryDtoFilterInput
+  any: Boolean
+}
+
+scalar Uuid
+
+"The `Byte` scalar type represents non-fractional whole numeric values. Byte can represent values between 0 and 255."
+scalar Byte
+
+type ProductInventoryDto {
+  productId: Int!
+  locationId: Short!
+  shelf: String!
+  bin: Byte!
+  quantity: Short!
+  rowguid: Uuid!
+  modifiedDate: DateTime!
+  product: ProductDto
+  location: LocationDto
+}
+
+type UserError {
+  message: String!
+  code: String!
+}
+
+type LocationDto {
+  locationId: Short!
+  name: String!
+  costRate: Decimal!
+  availability: Decimal!
+  modifiedDate: DateTime!
+  productInventories: [ProductInventoryDto!]!
+}
+
+directive @authorize("The name of the authorization policy that determines access to the annotated resource." policy: String "Roles that are allowed to access the annotated resource." roles: [String!] "Defines when when the resolver shall be executed.By default the resolver is executed after the policy has determined that the current user is allowed to access the field." apply: ApplyPolicy! = BEFORE_RESOLVER) repeatable on SCHEMA | OBJECT | FIELD_DEFINITION

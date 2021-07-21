@@ -1,0 +1,79 @@
+syntax = "proto3";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "KommunikaciosTechnikak.gRPC.Protos";
+
+service ProductProtoService{
+	rpc GetProduct (GetProductRequest) returns (ProductModel);
+	rpc GetAllProductsStream (GetAllProductsRequest) returns (stream ProductModel);
+	rpc GetAllProducts (GetAllProductsRequest) returns (GetAllProductsResponse);
+
+	rpc AddProduct (AddProductRequest) returns (ProductModel);
+	rpc UpdateProduct (UpdateProductRequest) returns (ProductModel);
+	rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse);
+
+	rpc Test (google.protobuf.Empty) returns (google.protobuf.Empty);
+	rpc GetToken (GetTokenRequest) returns (GetTokenResponse);
+}
+
+message GetTokenRequest {
+
+}
+
+message GetProductRequest {
+	int32 productId = 1;
+}
+
+message GetAllProductsRequest {
+}
+
+message GetAllProductsResponse {
+	repeated ProductModel products = 1;
+}
+
+message AddProductRequest {
+	ProductModel product = 1;
+}
+
+message UpdateProductRequest {
+	ProductModel product = 1;
+}
+
+message DeleteProductRequest {
+	int32 productId = 1;
+}
+
+message DeleteProductResponse {
+	bool success = 1;
+}
+
+message GetTokenResponse {
+	string token = 1;
+}
+
+message ProductModel {
+	int32 productId = 1;
+	string name = 2;
+	google.protobuf.StringValue productNumber = 3;
+	google.protobuf.BoolValue makeFlag = 4;
+	google.protobuf.BoolValue finishedGoodsFlag = 5;
+	google.protobuf.StringValue  color = 6;
+	int32 safetyStockLevel = 7;
+	int32 reorderPoint = 8;
+	google.protobuf.FloatValue standardCost = 9;
+	google.protobuf.FloatValue ListPrice = 10;
+	google.protobuf.StringValue size = 11;
+	google.protobuf.StringValue sizeUnitMeasureCode = 12;
+	google.protobuf.StringValue weightUnitMeasureCode = 13;
+	int32 daysToManufacture = 14;
+	google.protobuf.StringValue productLine = 15;
+	google.protobuf.StringValue class = 16;
+	google.protobuf.StringValue style = 17;
+	google.protobuf.Int32Value productSubcategoryId = 18;
+	google.protobuf.Int32Value productModelId = 19;
+	google.protobuf.Timestamp sellStartDate = 20;
+	google.protobuf.Timestamp sellEndDate = 21;
+	google.protobuf.Timestamp discontinuedDate = 22;
+}

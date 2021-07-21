@@ -1,0 +1,8 @@
+subscription OnProductAdded {
+  onProductAdded {
+    productId
+    name
+    safetyStockLevel
+    daysToManufacture
+  }
+}
